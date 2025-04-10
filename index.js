@@ -1,10 +1,16 @@
 const { initialiseDatabase } = require("./db/db.connect");
 const Event = require("./models/event.models");
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 
 initialiseDatabase();
 const app = express();
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 const allEvents = [
   {
