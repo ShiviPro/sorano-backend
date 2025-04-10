@@ -362,7 +362,7 @@ app.get("/events", async (req, res) => {
     const allEvents = await readAllEvents();
     allEvents.length > 0
       ? res.json(allEvents)
-      : res.status(404).json("No event found!");
+      : res.status(404).json({ error: "No event found!" });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch events!" });
   }
@@ -370,10 +370,10 @@ app.get("/events", async (req, res) => {
 
 const readEventById = async (eventId) => {
   try {
-    const desiredEvent = await Event.findOne({ _id: eventId });
+    const desiredEvent = await Event.findById(eventId);
     return desiredEvent;
   } catch (error) {
-    throw error;
+    console.log("Error reading event:", error);
   }
 };
 
